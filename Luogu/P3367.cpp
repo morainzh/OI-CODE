@@ -1,52 +1,36 @@
-#include <cstdio>
-#include <map>
+#include <iostream>
 
-using namespace std;
+const int N = 10003;
+typedef long long ll;
 
-int m[10003];
+int f[N];
 
-inline int read() {
-    int f = 1, x = 0;
-    char c;
-    while(c < '0' || c > '9') {
-        c = getchar();
-        if(c == '-') f = -1;
+inline int father( int k ) {
+    if( f[k] == k ) {
+        return k;
     }
-    while(c >= '0' && c <= '9') {
-        x = x * 10 + c -48;
-        c = getchar();
-    }
-
-    return f * x;
-}
-
-inline int query(int x, int y) {
-    while(m[x] != y && m[y] != x) {
-        y = m[x];
-        if(y == 0) return false;
-    }
-    return true;
+    return f[k] = father(f[k]);
 }
 
 int main() {
     int i, j;
     int n, m;
-    int x, y, z;
+    int z, x, y;
 
-    scanf("%d%d", &n, &m);
 
+    for(int i = 1; i <= N; ++ i) f[i] = i;
+
+    std::cin >> n >> m;
     for(i = 1; i <= m; ++ i) {
-        scanf("%d%d%D", &x, &y, &z);
-        if(x == 1) {
-            m[y] = z;
+        std::cin >> z >> x >> y;
+        if(z == 1) {
+            f[father(x)] = father(y);
         } else {
-            if(query(z, y)) {
-                puts("Y");
+            if(father(x) == father(y)) {
+                std::cout << "Y\n";
             } else {
-                puts("N");
+                std::cout << "N\n";
             }
         }
     }
-
-    return 0;
 }
