@@ -1,24 +1,27 @@
-#include<iostream>
-using namespace std;
+#include <iostream>
 
-int main()
-{
-    unsigned long long n;
-    cin >> n;
+const int N = 1003;
 
-    long long max=0, nmax=1, before, now;
-    cin >> before;
-    for (int i = 2; i <= n; i++) {
-        cin >> now;
-        if (now - before <= 0) {
-            if (nmax >= max)
-                max = nmax;
-            nmax = 1;
+int a[N];
+
+int main() {
+    register int i, j;
+    int n, m;
+    int maxv = 0, cnt = 0;
+
+    std::cin >> n;
+    for(i = 1; i <= n; ++ i) std::cin >> a[i];
+
+    for(i = 2; i <= n; ++ i) {
+        if(a[i] - a[i - 1] != 1) {
+            if(maxv < cnt) maxv = cnt;
+            cnt = 0;
         }
-        else
-            ++nmax;
-        before = now;
+        ++ cnt;
     }
-    cout << max << endl;
+
+    if(maxv < cnt) maxv = cnt;
+    std::cout << maxv;
+
     return 0;
 }
