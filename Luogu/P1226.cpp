@@ -1,20 +1,18 @@
 #include <iostream>
 
-inline int work(int x, int y) {
-    int ans = 1, cache = x;
-    while(y > 0) {
-        if(y & 1) ans *= cache;
-        cache *= cache;
-        y >>= 1;
-    }
-    return ans;
-}
-
 int main() {
-    register int i, j;
-    register int x, y, z;
+    register long long i, j;
+    long long ans, m, n, b, p;
 
-    std::cin >> x >> y >> z;
-    int wtf = work(x, y);
-    std::cout << x << "^" << y << " mod " << z << "=" << wtf%z;
+    std::cin >> b >> m >> p;
+    printf("%lld^%lld mod %lld=",b,m,p);
+    std::cout << b << '^' << m << " mod " << p << '=';
+    while(m > 0) {
+        if (m % 2 == 1) ans = ans * b % p;
+        b = b * b % p;
+        m = m >> 1;
+    }
+
+    std::cout << ans % p << ' ';
+
 }
